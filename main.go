@@ -25,9 +25,8 @@ func main() {
 			panic(err)
 		}
 		remainingTime := (resp.TLS.PeerCertificates[0].NotAfter.Unix() - utcTime) / 86400
-		if remainingTime > 10 {
+		if remainingTime < 10 {
 			body := fmt.Sprintf("%s 的ssl证书10天后过期,请及时更新!\n", domain)
-
 			mail.Sendmail(body)
 		}
 	}

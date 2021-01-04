@@ -3,7 +3,7 @@
 
 ## 说明
 ```
-公司使用acme.sh生成免费证书,每3个月自动更新一次(实际2月就会更新)
+一直使用acme.sh生成免费证书,每3个月自动更新一次(实际2月就会更新)
 # https://github.com/acmesh-official/acme.sh
 
 为避免自动更新失败或其它原因造成ssl证书过期,主动检测ssl过期时间;
@@ -14,7 +14,7 @@
 
 
 1. 下载代码
-   git clone github.com/WPFS/goSslNotAfter
+   git clone https://github.com/WPFS/goSslNotAfter.git
    cd goSslNotAfter
 2. 修改config.json文件
    a) 邮件服务器信息

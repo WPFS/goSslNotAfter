@@ -1,0 +1,8 @@
+{
+    "mailhost": "smtp.exmail.qq.com",
+    "mailport": "25",
+    "from": "user@qq.com",
+    "password": "pwd",
+    "to": "to1@qq.com;to2@qq.com",
+    "subject": "SSL证书马上到期, 请及时更新!!!"
+}

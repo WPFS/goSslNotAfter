@@ -1,29 +1,44 @@
 package mail
 
 import (
+	"encoding/json"
 	"net/smtp"
+	"os"
 	"strings"
 )
 
-const (
-	Addr     = "smtp.exmail.qq.com"
-	AddrPort = "smtp.exmail.qq.com:25"
-	User     = "user@qq.com"
-	Password = "pwd"
-	Subject  = "SSL证书马上到期, 请及时更新!!!"
-)
-
-var ToUser = "recipient@qq.com;recipient2@qq.com"
+type cfg struct {
+	MailHost string
+	MailPort string
+	From     string
+	Password string
+	To       string
+	Subject  string
+}
 
 func Sendmail(body string) {
-	auth := smtp.PlainAuth("", User, Password, Addr)
+	file, err := os.Open("config.json")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	decoder := json.NewDecoder(file)
 
-	msg := []byte("To: " + ToUser + "\r\n" +
-		"Subject: " + Subject + "\r\n" +
+	conf := cfg{}
+
+	err = decoder.Decode(&conf)
+	if err != nil {
+		panic(err)
+	}
+	//fmt.Println(conf.MailHost, conf.MailPort, conf.From, conf.Password, conf.To, conf.Subject)
+	auth := smtp.PlainAuth("", conf.From, conf.Password, conf.MailHost)
+
+	msg := []byte("To: " + conf.To + "\r\n" +
+		"Subject: " + conf.Subject + "\r\n" +
 		"\r\n" +
 		body + "\r\n")
-	toUser := strings.Split(ToUser, ";")
-	err := smtp.SendMail(AddrPort, auth, User, toUser, msg)
+	toUser := strings.Split(conf.To, ";")
+	err = smtp.SendMail(conf.MailHost+":"+conf.MailPort, auth, conf.From, toUser, msg)
 	if err != nil {
 		panic(err)
 	}

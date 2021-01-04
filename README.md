@@ -25,3 +25,6 @@
 4. go build 
 5. 添加至计划任务
 ```
+
+## ssl邮件发送参考大神的写法
+https://my.oschina.net/u/3768573/blog/1607327
